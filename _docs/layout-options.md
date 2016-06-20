@@ -55,3 +55,10 @@ This layout method does not have a UIKit analog. It is implemented by calling
 - logic is not reusable, and is still manual
 
 
+###Combining Layout Methods
+
+layoutSpecThatFits: + layout = OK
+calculateSizeThatFits: + layout = OK
+calculateLayoutThatFits: + layout = OK
+layoutSpecThatFits: + calculateSizeThatFits: = BAD
+NO *Fits: with *Fits:!!!!

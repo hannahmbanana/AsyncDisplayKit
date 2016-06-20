@@ -20,6 +20,8 @@ pod 'AsyncDisplayKit'
 </div>
 </div>
 
+For an example of a correctly setup podfile, see any of the podfiles in our /examples folder. Don't forget to quit xcode completely when running `pod install`. Also, make sure to open the workspace and _not_ the project file. To update your version of AsyncDisplayKit using CocoaPods, run `pod update AsyncDisplayKit`
+
 
 ### Carthage
 
