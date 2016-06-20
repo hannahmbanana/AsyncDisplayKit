@@ -6,7 +6,23 @@ prevPage: automatic-layout-debugging.html
 nextPage: layer-backing.html
 ---
 
-When using ASDK, you have three options for layout. Note that UIKit Autolayout is **not** supported by ASDK. 
+When using ASDK, you have three options for layout. Please note that **UIKit Autolayout is not supported by ASDK**. 
+
+# Automatic, Extensible Layout (Reccomended)
+
+This is the reccomended layout method. It does not have a UIKit analog and is implemented by calling
+
+`- (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constraint`
+###Advantages
+- can reuse even complex, custom layouts
+- built-in specs provide automatic layout
+- combine to compose new layouts easily
+- still async, cached, and zero duplication
+
+The diagram below shows how options #2 and #3 above both result in an ASLayout, except that in option #3, the ASLayout is produced automatically by the ASLayoutSpec.  
+
+<INSERT DIAGRAM>
+
 #Manual Sizing & Layout
 
 This original layout method shipped with ASDK 1.0 and is analogous to UIKit's layout methods. Use this method for ASViewControllers (unless you subclass the node).
@@ -25,6 +41,8 @@ This original layout method shipped with ASDK 1.0 and is analogous to UIKit's la
 
 #Unified Sizing & Layout
 
+For advanced users only, you can use this method to get some of the benefit. 
+
 This layout method does not have a UIKit analog. It is implemented by calling
 
 `- (ASLayout *)calculateLayoutThatFits: (ASSizeRange)constraint`
@@ -36,17 +54,4 @@ This layout method does not have a UIKit analog. It is implemented by calling
 ###Shortcomings
 - logic is not reusable, and is still manual
 
-# Automatic, Extensible Layout
 
-This is the reccomended layout method. It does not have a UIKit analog and is implemented by calling
-
-`- (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constraint`
-###Advantages
-- can reuse even complex, custom layouts
-- built-in specs provide automatic layout
-- combine to compose new layouts easily
-- still async, cached, and zero duplication
-
-The diagram below shows how options #2 and #3 above both result in an ASLayout, except that in option #3, the ASLayout is produced automatically by the ASLayoutSpec.  
-
-<INSERT DIAGRAM>

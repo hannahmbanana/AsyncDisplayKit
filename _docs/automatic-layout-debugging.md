@@ -6,6 +6,9 @@ prevPage: automatic-layout-examples.html
 nextPage: layout-options.html
 ---
 
+Two tools exist to help you debug your layout code. 
+
 ##Debugging with ASCII Art
 
-##ASLayoutSpecPlayground App
+
+##ASLayoutSpecPlayground (Coming Soon)

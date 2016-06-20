@@ -6,12 +6,27 @@ prevPage: automatic-layout-basics.html
 nextPage: automatic-layout-examples.html 
 ---
 
-AsyncDisplayKit includes a library of components that can be composed to declaratively specify a layout. The following LayoutSpecs allow you to have multiple children:
+AsyncDisplayKit includes a library of components that can be composed to declaratively specify a layout. **LayoutSpecs can 
+
+The following layoutSpecs allow you to **configure multiple children**:
+
+<table style="width:100%">
+  <tr>
+    <th>Component</th>
+    <th>Description</th> 
+  </tr>
+  <tr>
+    <td>**ASStackLayoutSpec**</td>
+    <td>is based on a simplified version of CSS flexbox. It allows you to stack components vertically or horizontally and specify how they should be flexed and aligned to fit in the available space.</td> 
+  </tr>
+</table>
+
+
 
 * **ASStackLayoutSpec** is based on a simplified version of CSS flexbox. It allows you to stack components vertically or horizontally and specify how they should be flexed and aligned to fit in the available space. 
 * **ASStaticLayoutSpec** allows positioning children at fixed offsets.
 
-The following layoutSpecs allow you to layout a single children: 
+The following layoutSpecs allow you to **configure a single child**: 
 
 * **ASLayoutSpec** can be used as a spacer if it contains no children
 * **ASInsetLayoutSpec** applies an inset margin around a component.
