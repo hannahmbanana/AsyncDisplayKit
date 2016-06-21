@@ -22,6 +22,8 @@
 #import "ASInternalHelpers.h"
 #import "UICollectionViewLayout+ASConvenience.h"
 #import "ASRangeControllerUpdateRangeProtocol+Beta.h"
+#import "ASTextNode.h"
+#import "AsyncDisplayKit+Debug.h"
 #import "_ASDisplayLayer.h"
 
 static const NSUInteger kASCollectionViewAnimationNone = UITableViewRowAnimationNone;
@@ -132,6 +134,8 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
    * The collection view never queried your data source before the update to see that it actually had 0 items.
    */
   BOOL _superIsPendingDataLoad;
+  
+  ASRangeHierarchyCountInfo *_debugHierarchyCountInfo;
     
   struct {
     unsigned int asyncDelegateScrollViewDidScroll:1;
@@ -267,6 +271,11 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
   self.backgroundColor = [UIColor whiteColor];
   
   [self registerClass:[_ASCollectionViewCell class] forCellWithReuseIdentifier:kCellReuseIdentifier];
+  
+  if ([ASRangeController shouldShowHierarchyDebugCountsOverlay]) {
+    _debugHierarchyCountInfo = [[ASRangeHierarchyCountInfo alloc] init];
+    [self addSubnode:_debugHierarchyCountInfo.textNode];
+  }
   
   return self;
 }
@@ -617,6 +626,11 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
   if (ASSubclassOverridesSelector([ASCellNode class], [cellNode class], @selector(cellNodeVisibilityEvent:inScrollView:withCellFrame:))) {
     [_cellsForVisibilityUpdates addObject:cell];
   }
+  if (_debugHierarchyCountInfo.textNode) {
+    [ASRangeController debugCountsForAllSubnodes:cellNode increment:YES rangeHierarchyCountInfo:_debugHierarchyCountInfo];
+    [ASRangeController updateRangeHierarchyCountInfo:_debugHierarchyCountInfo];
+    [self layoutDebugCountsTextNode];
+  }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(_ASCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
@@ -634,6 +648,13 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
     [_cellsForVisibilityUpdates removeObject:cell];
   }
   
+  if ([_cellsForVisibilityUpdates containsObject:cell]) {
+    [cellNode cellNodeVisibilityEvent:ASCellNodeVisibilityEventInvisible
+                         inScrollView:collectionView
+                        withCellFrame:cell.frame];
+    [_cellsForVisibilityUpdates removeObject:cell];
+  }
+  
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if (_asyncDelegateFlags.asyncDelegateCollectionViewDidEndDisplayingNodeForItemAtIndexPathDeprecated) {
@@ -642,8 +663,23 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
 #pragma clang diagnostic pop
   
   cellNode.scrollView = nil;
+  
+  if (_debugHierarchyCountInfo.textNode) {
+    [ASRangeController debugCountsForAllSubnodes:cellNode increment:NO rangeHierarchyCountInfo:_debugHierarchyCountInfo];
+    [ASRangeController updateRangeHierarchyCountInfo:_debugHierarchyCountInfo];
+    [self layoutDebugCountsTextNode];
+  }
 }
 
+#pragma mark Debug
+- (void)layoutDebugCountsTextNode
+{
+  CGSize textNodeSize = [_debugHierarchyCountInfo.textNode measure:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  _debugHierarchyCountInfo.textNode.frame = CGRectMake(self.frame.size.width - textNodeSize.width - 10 + self.contentOffset.x,
+                                                      70 + self.contentOffset.y,
+                                                      textNodeSize.width,
+                                                      textNodeSize.height);
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -661,6 +697,10 @@ static NSString * const kCellReuseIdentifier = @"_ASCollectionViewCell";
   }
   if (_asyncDelegateFlags.asyncDelegateScrollViewDidScroll) {
     [_asyncDelegate scrollViewDidScroll:scrollView];
+  }
+  
+  if ([ASRangeController shouldShowHierarchyDebugCountsOverlay]) {
+    [self layoutDebugCountsTextNode];
   }
 }
 
