@@ -11,19 +11,28 @@ nextPage: intelligent-preloading.html
 AsyncDisplayKit is available on <a href="http://cocoapods.org">CocoaPods</a>.  Add the following to your Podfile:
 
 <div class = "highlight-group">
-<span class="language-toggle"><a data-lang="ruby" class = "active">Ruby</a></span>
+<span class="language-toggle"><a data-lang="ruby" class = "active">CocoaPods</a></span>
 
 <div class = "code">
-	<pre lang="ruby" class="ruby">
-pod 'AsyncDisplayKit'
+	<pre lang="ruby" class="CocoaPods">
+target 'MyApp' do
+	pod "AsyncDisplayKit"
+end
 	</pre>
 </div>
 </div>
 
-For an example of a correctly setup podfile, see any of the podfiles in our /examples folder. Don't forget to quit xcode completely when running `pod install`. Also, make sure to open the workspace and _not_ the project file. To update your version of AsyncDisplayKit using CocoaPods, run `pod update AsyncDisplayKit`
+Quit Xcode completely before running `'pod install'` in the project directory in Terminal.  
 
+To update your version of AsyncDisplayKit, run `'pod update AsyncDisplayKit'`.
 
-### Carthage
+Notes: 
+<ul>
+<li>make sure to open the workspace (`.xcworkspace`) and _not_ the project file (`.xcodeproj`)</li>
+<li>Please see <a href = "https://github.com/facebook/AsyncDisplayKit/tree/master/examples/ASDKgram</a> for an example of how to include AsyncDisplayKit in an Xcode project via CocoaPods.</li>
+</ul>
+
+### Carthage (Standard Build)
 
 AsyncDisplayKit is also available through <a href="https://github.com/Carthage/Carthage">Carthage</a>. Add the following to your Cartfile:
 
@@ -36,7 +45,7 @@ github "facebook/AsyncDisplayKit"
 </div>
 </div>
 
-Run ‘carthage update’ in Terminal and to fetch and build the AsyncDisplayKit library. This will create a folder named Carthage in your app’s root folder. In that folder there will be a ‘Build’ folder from where you have to drag the frameworks you want to use into the “Linked Frameworks and Libraries” section in Xcode.
+Run `carthage update` in Terminal to fetch and build the AsyncDisplayKit library. This will create a folder named Carthage in your app’s root folder. In that folder there will be a ‘Build’ folder from where you have to drag the frameworks you want to use into the “Linked Frameworks and Libraries” section in Xcode.
 
 ### Static Library
 
