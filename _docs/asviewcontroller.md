@@ -7,7 +7,7 @@ nextPage: aspagernode.html
 ---
 
 ASViewController is a direct subclass of UIViewController.  For the most part, it can be used in place of any UIViewController relatively easily.  
-
+ 
 The main difference is that you construct and return the node you'd like managed as opposed to the way UIViewController provides a view of its own.
 
 Consider the following ASViewController subclass that would like to use a custom table node as its managed node.
