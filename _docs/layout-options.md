@@ -6,9 +6,22 @@ prevPage: automatic-layout-debugging.html
 nextPage: layer-backing.html
 ---
 
-When using ASDK, you have three options for layout. Please note that **UIKit Autolayout is not supported by ASDK**. 
+When using AsyncDisplayKit, you have three options for layout:
 
-# Automatic, Extensible Layout (Reccomended)
+
+<a href = "layout-options.html#">automatic, extensible Layout API</a>
+
+<ul>
+<li>The Layout API, which is based on the CSS flexbox model, is the reccomended layout option.</li>
+This is a test
+<li>Manual Sizing & Layout [For a few cases in which the Layout API doesn't make sense]</li>
+<li>Unified Sizing & Layout [Advanced users only]</li>
+</ul>
+
+Please note that <a href = "top-misunderstandings.html#asyncdisplaykit-does-not-support-uikit-auto-layout">UIKit Auto Layout is not supported</a>.
+
+
+## Automatic, Extensible Layout (Reccomended)
 
 This is the reccomended layout method. It does not have a UIKit analog and is implemented by calling
 
@@ -23,7 +36,7 @@ The diagram below shows how options #2 and #3 above both result in an ASLayout, 
 
 <INSERT DIAGRAM>
 
-#Manual Sizing & Layout
+##Manual Sizing & Layout
 
 This original layout method shipped with ASDK 1.0 and is analogous to UIKit's layout methods. Use this method for ASViewControllers (unless you subclass the node).
 
@@ -39,7 +52,7 @@ This original layout method shipped with ASDK 1.0 and is analogous to UIKit's la
 - Code duplication between methods
 - Logic is not reusable
 
-#Unified Sizing & Layout
+##Unified Sizing & Layout
 
 For advanced users only, you can use this method to get some of the benefit. 
 
@@ -55,10 +68,13 @@ This layout method does not have a UIKit analog. It is implemented by calling
 - logic is not reusable, and is still manual
 
 
-###Combining Layout Methods
+##Combining Layout Methods
 
-layoutSpecThatFits: + layout = OK
-calculateSizeThatFits: + layout = OK
-calculateLayoutThatFits: + layout = OK
-layoutSpecThatFits: + calculateSizeThatFits: = BAD
-NO *Fits: with *Fits:!!!!
+The following layout methods are okay to combine:
+<ul>
+<li>`-layout` and `-layoutSpecThatFits:`</li>
+<li>`-layout` and `-calculateSizeThatFits:`</li>
+<li>`-layout` and `-calculateLayoutThatFits:`</li>
+</ul>
+
+Do **not**, however, combine any `-{*}ThatFits:` methods with any other `-{*}ThatFits:` methods.  
