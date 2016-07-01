@@ -7,7 +7,7 @@
   items:
   - intelligent-preloading
   - subclassing
-  - layout-engine
+  - node-lifecycle
   - top-misunderstandings
 - title: Node Containers
   items:
@@ -18,6 +18,7 @@
   - containers-aspagernode
 - title: Nodes
   items:
+  - node-overview
   - display-node
   - cell-node
   - text-cell-node
@@ -33,6 +34,7 @@
   - scroll-node
 - title: Layout Engine
   items:
+  - layout-engine
   - automatic-layout-basics
   - automatic-layout-containers
   - automatic-layout-examples
@@ -51,9 +53,10 @@
   - batch-fetching-api
   - image-modification-block
   - placeholder-fade-duration
-  - debug-tool-hit-test-visualization
-  - debug-tool-pixel-scaling
+  - debug-tools
 - title: Beta
   items:
   - implicit-hierarchy-mgmt
   - layout-transition-api
+- title: Advanced Topics
+  items:

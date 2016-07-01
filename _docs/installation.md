@@ -6,51 +6,40 @@ prevPage: philosophy.html
 nextPage: intelligent-preloading.html
 ---
 
-AsyncDisplayKit may be added to your project via 
-<ul>
-  <li><a href = "installation.html#cocoapods">CocoaPods</a></li>
-  <li><a href = "installation.html#carthage-standard-build">Carthage</a> (standard build)</li>
-  <li><a href = "installation.html#static-library">Static Library</a></li>
-</ul>
+AsyncDisplayKit may be added to your project via <a href = "installation.html#cocoapods">CocoaPods</a> or <a href = "installation.html#carthage-standard-build">Carthage</a> (standard build)</li>. The Carthage "light" build is not yet supported.
 
-Don't forget to import the framework header or create an <a href="https://developer.apple.com/library/ios/documentation/swift/conceptual/buildingcocoaapps/MixandMatch.html">Objective-C bridging header</a> (if you're using **Swift**)
+Don't forget to import the framework header 
 
-<div class = "highlight-group">
-<span class="language-toggle"><a data-lang="objective-c" class = "active objcButton">Objective-C</a></span>
-<div class = "code">
-	<pre lang="objc" class="objc">
-#import &lt;AsyncDisplayKit/AsyncDisplayKit.h&gt;
-	</pre>
-</div>
-</div>
+```
+#import <AsyncDisplayKit/AsyncDisplayKit.h>
+```
+or create a <a href="https://developer.apple.com/library/ios/documentation/swift/conceptual/buildingcocoaapps/MixandMatch.html">Objective-C bridging header</a> (Swift).
 
-If you have any problems installing AsyncDisplayKit, don't hesitate to reach out to us on <a href = "https://github.com/facebook/AsyncDisplayKit/issues">Github</a> or <a href = "/resources.html#slack">Slack</a>!
+If you have any problems installing AsyncDisplayKit, don't hesitate to reach out to us on Github or <a href = "/resources.html#slack">Slack</a>!
 
 ## CocoaPods
 
 AsyncDisplayKit is available on <a href="http://cocoapods.org">CocoaPods</a>. Add the following to your Podfile:
 
-<div class = "highlight-group">
-<span class="language-toggle"><a data-lang="ruby" class = "active">CocoaPods</a></span>
-
-<div class = "code">
-	<pre lang="ruby" class="CocoaPods">
+```
 target 'MyApp' do
 	pod "AsyncDisplayKit"
 end
-	</pre>
-</div>
-</div>
+```
 
 Quit Xcode completely before running 
 
-`> pod install` 
+```
+> pod install
+```
 
 in the project directory in Terminal.  
 
 To update your version of AsyncDisplayKit, run 
 
-`> pod update AsyncDisplayKit`
+```
+> pod update AsyncDisplayKit
+```
 
 in the project directory in Terminal. 
 
@@ -70,31 +59,23 @@ AsyncDisplayKit is also available through <a href="https://github.com/Carthage/C
 
 Add the following to your Cartfile to get the **latest release branch**:
 
-<div class = "highlight-group">
-<span class="language-toggle"><a data-lang="carthage" class = "active">Carthage</a></span>
-<div class = "code">
-	<pre lang="carthage" class="carthage">
+```
 github "facebook/AsyncDisplayKit"
-	</pre>
-</div>
-</div>
+```
 
 Or, to get the **master branch**:
 
-<div class = "highlight-group">
-<span class="language-toggle"><a data-lang="carthage" class = "active">Carthage</a></span>
-<div class = "code">
-	<pre lang="carthage" class="carthage">
+```
 github "facebook/AsyncDisplayKit" "master"
-	</pre>
-</div>
-</div>
+```
 
 AsyncDisplayKit has its own Cartfile which lists its dependencies, so this is the only neccessary line. 
 
 Run 
 
-`> carthage update` 
+```
+> carthage update
+```
 
 in Terminal. This will fetch dependencies into a Carthage/Checkouts folder, then build each one. 
 

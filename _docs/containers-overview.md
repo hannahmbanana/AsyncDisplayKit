@@ -10,9 +10,9 @@ nextPage: containers-asviewcontroller.html
 For maximum performance, it is highly recommended that you use AsyncDisplayKit's nodes within a node container. AsyncDisplayKit offers the following node containers:
 
 - <a href = "containers-asviewcontroller.html">`ASViewController`</a> in place of UIKit's `UIViewController`
-- <a href = "containers-ascollectionnode.html">`ASCollectionNode`</a> in place of UIKit's `UICollectionView`
-- <a href = "containers-aspagernode.html">`ASPagerNode`</a> in place of UIKit's `UIPageViewController`
 - <a href = "containers-astablenode.html">`ASTableNode`</a> in place of UIKit's `UITableView`
+- <a href = "containers-ascollectionnode.html">`ASCollectionNode`</a> in place of UIKit's `UICollectionView`
+- <a href = "containers-aspagernode.html">`ASPagerNode`</a> is similar to `UIPageViewController`, but not a view controller.
  
 Example code and specific sample projects are highlighted in the documentation for each node container. 
 
