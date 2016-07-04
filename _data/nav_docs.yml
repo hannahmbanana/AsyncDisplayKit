@@ -45,7 +45,6 @@
   - layer-backing
   - synchronous-concurrency
   - subtree-rasterization
-  - drawing-priority
   - corner-rounding
 - title: Conveniences
   items:
