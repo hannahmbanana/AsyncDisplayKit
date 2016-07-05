@@ -6,36 +6,51 @@ prevPage: drawing-priority.html
 nextPage: hit-test-slop.html
 ---
 
-If you’ve worked with Scott Goodson before, you’ll know that one of his pet peeves is use of CALayer’s "disasterously inefficient" .cornerRadius property. This post will cover
+If you've worked with Scott Goodson before, you’ll know that use of CALayer’s expensive `.cornerRadius` property is one of his biggest pet peeves. This post will cover:
 
 <ul>
-<li>why you shouldn’t use CALayer’s .cornerRadius if you care about performance.*</li>
-<li>acceptable corner round strategies & and when to use them</li>
-<li>a flow chart for choosing your ideal corner rounding strategy</li>
+<li><a href = "corner-rounding.html#calayer-s-cornerradius-is-expensive">why you shouldn’t use CALayer’s .cornerRadius</a></li>
+<li><a href = "corner-rounding.html#performant-corner-rounding-strategies">more performant corner rounding options & and when to use them</a></li>
+<li><a href = "corner-rounding.html#corner-rounding-strategy-flowchart">a flow chart for choosing your ideal corner rounding strategy</a></li>
+<li><a href = "corner-rounding.html#corner-rounding-strategy-flowchart">ASDK corner rounding methods</a></li>
 </ul>
 
 ## CALayer's .cornerRadius is Expensive
 
-## Performant Corner Round Strategies
+When it comes to corner rounding, many developers stick with CALayer's `.cornerRadius` property.  Unfortunately, this convenient property greatly taxes performance and should only be used when there is _no_ alternative.  
 
-### Types of Corner Movement
+Why is `.cornerRadius` so expensive? Use of CALayer's `.cornerRadius` property triggers offScreen rendering to perform the clipping operation on every frame - 60 FPS during scrolling - even if the content in that area isn't changing! This means that the GPU has to switch context on every frame between compositing the new frame vs. doing one frame’s subtree. This intensive thrash annihilates performance for a lot of devices.  On the iPhone 4, 4S, and 5 / 5C (along with comparable iPads / iPods), expect to see visually degraded performance. On the iPhone 5S and new, reduced head room will make frame drops more likely. 
 
-The type of corner rounding strategy you pick for a corner will depend on the type of movement through and underneath the corner. 
 
-####Movement Through the Corner
+####Is it ever okay to use CALayer's .cornerRadius property?
 
-If you think of the rounded object as a window with rounded corners, the movement in the "window" would be movement through the corner. 
+There are a few _rare_ cases in which it is appropriate to use `.cornerRadius.` These include corner rounding cases in which there is  movement both through and underneath the corner. For certain animations, this is impossible to avoid. However, in other situations is is advisable to consider adjusting your design to eliminate one of the sources of movement. We will discuss one case later on in this post.
 
-Note: stuff can move inside the corner, but as long as it doesn't touch the corner, it is okay. 
+It is much less bad, and okay as a shortcut, to use `.cornerRadius.` for screens in which _nothing_ moves. However, any motion on the screen, even movement that doesn't involve the corners, will cause the `.cornerRadius.` perfromance tax. Additionally, any type of screen refresh will incur the cost of corner rounding. 
 
-- stocks app
-- zooming in on a photo in a rounded node
+## Performant Corner Rounding Strategies
 
-####Movement Underneath the Corner
+The ideal corner rounding strategy will depend on whether there is movement _through_ and/or _underneath_ the corner.  The following image shows movement through the corner highlighted in orange and movement underneath the corner highlighted in blue. 
 
-This is movement from underneath (or behind) the corner. 
+**Movement underneath the corner** is defined as any movement behind the corner. For example, as a rounded-corner collection cell scrolls over a background, the background will move underneath and out from under the corners.  
 
-This example shows an rounded, ASTextNode with photos scrolling underneath it. 
+To describe **movement through the corner,** imagine a small rounded-corner scroll view containing a much larger photo. As you zoom and pan the photo, the photo will move through the corners of the of the scroll view.  
+
+<img src="/static/corner-rounding/corner-rounding-movement.PNG" width="60%" height="60%">
+
+Note that there can be movement inside of the rounded-corner object, without moving through the corner. In the image below, you can visualize how content scrolling through the green zone will not move through the corners. Adjusting your design to eliminate one source of corner movement can make the difference between being forced to use `.cornerRadius.` versus a more optimal performance method. 
+
+<img src="/static/corner-rounding/corner-rounding-scrolling.PNG">
+
+### Baked-in Corners
+
+Baked-in corners refer to corners drawn using bezier paths, thus the corners are "baked in" to the single CALayer. There are two types of baked-in corners. 
+
+The best, most efficient method is to use **opaque corners**.  This method involves zero blending, as the corners are on a single layer that requires no offscreen rendering. Unfortunately, this method is less flexible as the background behind the rounded corners will need to be a solid color in order for the rounded corner item to move around on top of it. 
+
+The second method involves usins bezier paths with **alpha corners** (`[path clip]`). This method is the most flexible, but incurs the cost of alpha blending the _full_ thing. This method is still way better than cornerRadius and equivocal / slightly better than clip corners (will swap places depending on device - GPU / CPU thing).
+
+AsyncDisplayKit offers a variety of class methods to create flat-colored, rounded-corner resizable images using Baked-in Corners (Alpha + Opaque). See `UIImage+ASConveniences.h` for a complete listing. 
 
 ### Clip Corner
 
@@ -48,13 +63,9 @@ Clip corners applies to two main types of corner rounding situations:
 <li>Rounded corners on top of a stationary texture or photo background (tricky, but useful!)</li>
 </ul>
 
-### Baked-in Corners (Alpha & Opaque)
 
-Baked-in corners refer to corners drawn using bezier paths. There are two ways to do baked-in corners. 
 
-The best, most efficient method is to use opaque corners. This involves zero blending, only one layer with no offscreen rendering. Unfortunately, this method is less flexible as you neeed a solid background to move around on. 
 
-The second method involves usins bezier paths with alpha (`[path clip]`). This method is the most flexible, but incurs the cost of alpha blending the _full_ thing. This method is still way better than cornerRadius and equivocal / slightly better than clip corners (will swap places depending on device - GPU / CPU thing).
 
 ## Rasterization and Layerbacking
 
@@ -76,6 +87,6 @@ However, for people who have shi*** app architecture and use corner radius, this
 
 ## Corner Rounding Strategy Flowchart
 
-To wrap this all up, here's a flowchart to guide you to the best strategy for a particular set of rounded corner. 
+Use this flowchart to guide you to the best strategy to round a set of corners.
 
-<img src="/static/corner-rounding-flowchart.PNG" alt="corner rounding strategy flowchart">
+<img src="/static/corner-rounding/corner-rounding-flowchart.PNG" alt="corner rounding strategy flowchart">
