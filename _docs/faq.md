@@ -1,7 +1,7 @@
 ---
 title: FAQ 
 layout: docs
-permalink: /docs/top-misunderstandings.html
+permalink: /docs/faq.html
 prevPage: layout-engine.html
 nextPage: containers-overview.html
 ---
@@ -60,7 +60,7 @@ AsyncDisplayKit does not use cell reuse, for a number of specific reasons, one s
 
 ### LayoutSpecs Are Regenerated
 <br>
-A node's layoutSpec gets regenerated every time layoutThatFits: is called. 
+A node's layoutSpec gets regenerated every time its `layoutThatFits:` method is called. 
 <br>
 
 ### CALayer's .cornerRadius Property Kills Performance
