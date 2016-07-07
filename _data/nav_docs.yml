@@ -52,6 +52,8 @@
   - batch-fetching-api
   - image-modification-block
   - placeholder-fade-duration
+- title: Tools
+  items:
   - debug-tools
 - title: Beta
   items:
@@ -59,3 +61,4 @@
   - layout-transition-api
 - title: Advanced Topics
   items:
+  
