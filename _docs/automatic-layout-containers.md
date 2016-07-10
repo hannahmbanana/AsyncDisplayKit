@@ -20,31 +20,31 @@ The following properties will only apply to a child wrapped in an *stack* layout
     <th>Description</th> 
   </tr>
   <tr>
-    <td><b>spacingBefore</b></td>
+    <td><b>.spacingBefore</b></td>
     <td>Additional space to place before this object in the stacking direction.</td> 
   </tr>
   <tr>
-    <td><b>spacingAfter</b></td>
+    <td><b>.spacingAfter</b></td>
     <td>Additional space to place after this object in the stacking direction.</td> 
   </tr>
   <tr>
-    <td><b>flexGrow</b></td>
+    <td><b>.flexGrow</b></td>
     <td> </td> 
   </tr>
   <tr>
-    <td><b>flexShrink</b></td>
+    <td><b>.flexShrink</b></td>
     <td> </td> 
   </tr>
   <tr>
-    <td><b>flexBasis</b></td>
+    <td><b>.flexBasis</b></td>
     <td> Specifies the initial size for this object, in the stack dimension (horizontal or vertical), before the flexGrow or flexShrink properties are applied and the remaining space is distributed.  <img src="/static/layoutable-properties/flex-basis.png"> </td> 
   </tr>
   <tr>
-    <td><b>ascender</b></td>
+    <td><b>.ascender</b></td>
     <td> </td> 
   </tr>
   <tr>
-    <td><b>descender</b></td>
+    <td><b>.descender</b></td>
     <td> </td> 
   </tr>
 </table> 
@@ -117,3 +117,12 @@ AsyncDisplayKit includes a library of `layoutSpec` components that can be compos
 ### LayoutSpec Strategy
 
 <img src="/static/layoutspec-breakdown.png">
+
+
+
+### Best Practices
+
+- don't wrap everything in a staticLayoutSpec
+- avoid using preferred frame size for everything - won't respond nicely to device rotation or device sizing differences 
+
+
