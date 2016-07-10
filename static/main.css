@@ -470,6 +470,20 @@ footer {
     margin-bottom: 0px;
 }
 
+.paddingBetweenCols th {
+    text-align: left;
+    padding: 15px 15px 15px 15px;
+}
+
+.paddingBetweenCols td {
+    padding: 15px 15px 15px 15px;
+/*    border: 1 px solid black;*/
+}
+
+.paddingBetweenCols tr:nth-child(even){
+    background-color: #f2f2f2
+}
+
 /* desktopish */
 
 @media (min-width: 481px) {
