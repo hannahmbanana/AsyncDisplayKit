@@ -19,7 +19,9 @@ If you've worked with Scott Goodson before, you will know that CALayer’s `.cor
 
 When it comes to corner rounding, many developers stick with CALayer's `.cornerRadius` property.  Unfortunately, this convenient property greatly taxes performance and should only be used when there is _no_ alternative.  
 
-Why is `.cornerRadius` so expensive? Use of CALayer's `.cornerRadius` property triggers off-screen rendering to perform the clipping operation on every frame - 60 FPS during scrolling - even if the content in that area isn't changing! This means that the GPU has to switch contexts on every frame, between compositing the overall frame + additional passes for each use of `.cornerRadius`.  Importantly, these costs don't show up in the Time Profiler, because they affect work done by the CoreAnimation Render Server on your app's behalf.  This intensive thrash annihilates performance for a lot of devices.  On the iPhone 4, 4S, and 5 / 5C (along with comparable iPads / iPods), expect to see notably degraded performance. On the iPhone 5S and newer, even if you can't see the impact directly, it will reduce headroom so that it takes less to cause a frame drop. 
+Why is `.cornerRadius` so expensive?  Use of CALayer's `.cornerRadius` property triggers off-screen rendering to perform the clipping operation on every frame - 60 FPS during scrolling - even if the content in that area isn't changing!  This means that the GPU has to switch contexts on every frame, between compositing the overall frame + additional passes for each use of `.cornerRadius`.  
+
+Importantly, these costs don't show up in the Time Profiler, because they affect work done by the CoreAnimation Render Server on your app's behalf.  This intensive thrash annihilates performance for a lot of devices.  On the iPhone 4, 4S, and 5 / 5C (along with comparable iPads / iPods), expect to see notably degraded performance.  On the iPhone 5S and newer, even if you can't see the impact directly, it will reduce headroom so that it takes less to cause a frame drop. 
 
 ## Performant Corner Rounding Strategies
 
@@ -35,7 +37,7 @@ Movement **underneath the corner** is any movement behind the corner.  For examp
 
 To describe movement **through the corner,** imagine a small rounded-corner scroll view containing a much larger photo.  As you zoom and pan the photo inside of the scroll view, the photo will move through the corners of the of the scroll view. 
 
-<img src="/static/corner-rounding/corner-rounding-movement.PNG" width="60%" height="60%">
+<img src="/static/corner-rounding-movement.png" width="60%" height="60%">
 
 The above image shows movement underneath the corner highlighted in blue and movement thruogh the corner highlighted in orange. 
 
@@ -43,13 +45,13 @@ The above image shows movement underneath the corner highlighted in blue and mov
 Note: There can be movement <i>inside</i> of the rounded-corner object, without moving <i>through</i> the corner.  The following image shows content, highlighted in green, inset from the edge with a margin equal to the size of the corner radius.  When the content scrolls, it will <i>not</i> move through the corners.
 </div>
 
-<img src="/static/corner-rounding/corner-rounding-scrolling.PNG">
+<img src="/static/corner-rounding-scrolling.png">
 
 Using the above method to adjust your design to eliminate one source of corner movement can make the difference between being able to use a fast rounding technique, or resorting to `.cornerRadius.`. 
 
 The final consideration is to determine if all four corners cover the same node or if any subnodes interesect the corner area. 
 
-<img src="/static/corner-rounding/corner-rounding-overlap.png" width="60%" height="60%">
+<img src="/static/corner-rounding-overlap.png" width="60%" height="60%">
 
 ### Precomposited Corners
 
@@ -69,7 +71,7 @@ Finally, if you're looking for a simple, flat-color rounded rectangle or circle,
 
 This strategy involves placing **4 seperate opaque corners that sit on top of the content** that needs corner rounding.  This method is flexible and has quite good performance.  It has minor CPU overhead of 4 seperate layers, one layer for each corner. 
 
-<img src="/static/corner-rounding/clip-corners.png">
+<img src="/static/clip-corners.png">
 
 Clip corners applies to two main types of corner rounding situations:
 
@@ -94,4 +96,4 @@ CALayer's `.shouldRasterize` is unrelated to AsyncDisplayKit `node.shouldRasteri
 
 Use this flowchart to select the most performant strategy to round a set of corners.
 
-<img src="/static/corner-rounding/corner-rounding-flowchart-v2.PNG" alt="corner rounding strategy flowchart">
+<img src="/static/corner-rounding-flowchart-v2.png" alt="corner rounding strategy flowchart">
