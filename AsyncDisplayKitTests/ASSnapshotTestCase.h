@@ -9,12 +9,7 @@
 //
 
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
-
-#if __LP64__
-#define AS_64 1
-#else
-#define AS_64 0
-#endif
+#import "ASAvailability.h"
 
 /**
  Maps platform to reference image directory suffix
@@ -26,7 +21,7 @@ AS_AT_LEAST_IOS10 ? @"_IOS10" : \
 AS_AT_LEAST_IOS9 ? @"_IOS9" : \
 AS_AT_LEAST_IOS8 ? @"_IOS8" : \
 @""; \
-AS_64 ? [suffix stringByAppendingString:@"_64"] : suffix; \
+suffix; \
 })
 
 @class ASDisplayNode;
@@ -34,13 +29,13 @@ AS_64 ? [suffix stringByAppendingString:@"_64"] : suffix; \
 #define ASSnapshotVerifyNode(node__, identifier__) \
 { \
   [ASSnapshotTestCase hackilySynchronouslyRecursivelyRenderNode:node__]; \
-  FBSnapshotVerifyLayer(node__.layer, identifier__); \
+  ASSnapshotVerifyLayer(node__.layer, identifier__); \
   [node__ setShouldRasterizeDescendants:YES]; \
   [ASSnapshotTestCase hackilySynchronouslyRecursivelyRenderNode:node__]; \
-  FBSnapshotVerifyLayer(node__.layer, identifier__); \
+  ASSnapshotVerifyLayer(node__.layer, identifier__); \
   [node__ setShouldRasterizeDescendants:NO]; \
   [ASSnapshotTestCase hackilySynchronouslyRecursivelyRenderNode:node__]; \
-  FBSnapshotVerifyLayer(node__.layer, identifier__); \
+  ASSnapshotVerifyLayer(node__.layer, identifier__); \
 }
 
 #define ASSnapshotVerifyLayerWithOptions(layer__, identifier__, suffixes__, tolerance__) \
@@ -97,12 +92,5 @@ AS_64 ? [suffix stringByAppendingString:@"_64"] : suffix; \
  * Hack for testing.  ASDisplayNode lacks an explicit -render method, so we manually hit its layout & display codepaths.
  */
 + (void)hackilySynchronouslyRecursivelyRenderNode:(ASDisplayNode *)node;
-
-/**
- Returns a default set of strings that is used to append a suffix based on the architectures and OS.
- 
- @returns An @c NSOrderedSet object containing strings that are appended to the reference images directory.
- */
-NSOrderedSet *ASSnapshotTestCaseDefaultSuffixes(void);
 
 @end
