@@ -21,6 +21,11 @@ static const ASSizeRange kSize = {{320, 320}, {320, 320}};
 
 @implementation ASBackgroundLayoutSpecSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testBackground
 {
   ASDisplayNode *backgroundNode = ASDisplayNodeWithBackgroundColor([UIColor blueColor]);

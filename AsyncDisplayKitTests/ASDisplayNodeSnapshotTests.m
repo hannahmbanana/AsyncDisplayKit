@@ -15,6 +15,11 @@
 
 @implementation ASDisplayNodeSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testBasicHierarchySnapshotTesting
 {
   ASDisplayNode *node = [[ASDisplayNode alloc] init];

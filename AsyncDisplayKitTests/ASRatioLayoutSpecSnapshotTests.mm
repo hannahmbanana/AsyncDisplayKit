@@ -19,6 +19,11 @@ static const ASSizeRange kFixedSize = {{0, 0}, {100, 100}};
 
 @implementation ASRatioLayoutSpecSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testRatioLayoutSpecWithRatio:(CGFloat)ratio childSize:(CGSize)childSize identifier:(NSString *)identifier
 {
   ASDisplayNode *subnode = ASDisplayNodeWithBackgroundColor([UIColor greenColor], childSize);

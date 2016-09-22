@@ -21,7 +21,7 @@
 
 - (void)setUp {
     [super setUp];
-    self.recordMode = NO;
+    self.recordMode = AS_RECORD_MODE;
 }
 
 - (void)testTextContainerInset

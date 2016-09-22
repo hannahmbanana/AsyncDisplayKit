@@ -11,9 +11,8 @@
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 #import "ASAvailability.h"
 
-/**
- Maps platform to reference image directory suffix
- */
+#define AS_RECORD_MODE 0
+
 #define ASSnapshotReferenceDirectorySuffix() \
 ({ \
 NSString *suffix = \

@@ -21,6 +21,11 @@ static const ASSizeRange kSize = {{100, 120}, {320, 160}};
 
 @implementation ASCenterLayoutSpecSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testWithOptions
 {
   [self testWithCenteringOptions:ASCenterLayoutSpecCenteringNone sizingOptions:{}];

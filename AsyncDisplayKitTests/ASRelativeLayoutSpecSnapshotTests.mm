@@ -21,6 +21,11 @@ static const ASSizeRange kSize = {{100, 120}, {320, 160}};
 
 @implementation ASRelativeLayoutSpecSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testWithOptions
 {
   [self testAllVerticalPositionsForHorizontalPosition:ASRelativeLayoutSpecPositionStart];

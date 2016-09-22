@@ -20,6 +20,11 @@
 
 @implementation ASStaticLayoutSpecSnapshotTests
 
+- (void)setUp {
+    [super setUp];
+    self.recordMode = AS_RECORD_MODE;
+}
+
 - (void)testSizingBehaviour
 {
   [self testWithSizeRange:ASSizeRangeMake(CGSizeMake(150, 200), CGSizeMake(INFINITY, INFINITY))
